@@ -26,7 +26,7 @@ bool are_equal (double x, double y) {
 }
 
 bool more (double x, double y) {
-    return (x >= y) || (!are_equal(x, y));
+    return (x >= y) || (are_equal(x, y));
 }
 
 
@@ -37,13 +37,16 @@ int main() {
     double root1 = 0.0;
     double root2 = 0.0;
     int roots_number = NO_ROOTS;
-    int test_result = 0;
+    int test_result = 1;
 
-    //test_result = quadratic_tests (); // Function that runs tests.
+    test_result = quadratic_tests (); // Function that runs tests.
 
     switch (test_result) {
         case 0:
             printf("All right, All right, All right!!!\nAll tests passed\n");
+            break;
+        case 1:
+            printf("Tests turned off.");
             break;
         default:
             printf("Sadly, tests failed(");
@@ -60,6 +63,7 @@ int main() {
         printf("Incorrect input.\n");
         printf("Try again:\n");
         fflush(stdin);
+        fflush(stdout);
     }
     printf("Input b:\n"); 
     fflush(stdout);
@@ -67,6 +71,7 @@ int main() {
         printf("Incorrect input.\n");
         printf("Try again:\n");
         fflush(stdin);
+        fflush(stdout);
     }
     printf("Input c:\n");
     fflush(stdout); 
@@ -74,6 +79,7 @@ int main() {
         printf("Incorrect input.\n");
         printf("Try again:\n");
         fflush(stdin);
+        fflush(stdout);
     }
     
 
@@ -124,7 +130,7 @@ int quadratic_equation_solution(double a, double b, double c, double* root1, dou
     else {
     discriminant = b * b - 4 * a * c;
     are_real_roots = more(discriminant, 0.0);
-    if (are_real_roots) {
+    if (!are_real_roots) {
         return NO_ROOTS;
     }
     square_of_discriminant = sqrt(discriminant);
