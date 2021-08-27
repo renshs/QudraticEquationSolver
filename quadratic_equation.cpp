@@ -9,6 +9,14 @@
 
 const double PRECISION = 1e-7;
 
+enum RootsNumber : int {
+    NO_ROOTS,
+    ONE_ROOT,
+    TWO_ROOTS,
+    INFINITE_NUMBER_OF_ROOTS
+};
+
+
 int quadratic_equation_solution(double a, double b, double c, double* root1, double* root2);
 int linear_equation_solution(double b, double c, double* root1);
 
@@ -22,13 +30,6 @@ bool more (double x, double y) {
 }
 
 
-enum RootsNumber : int {
-    NO_ROOTS,
-    ONE_ROOT,
-    TWO_ROOTS,
-    INFINITE_NUMBER_OF_ROOTS
-};
-
 int main() {
     double a = 0.0;
     double b = 0.0;
@@ -37,7 +38,17 @@ int main() {
     double root2 = 0.0;
     int roots_number = NO_ROOTS;
 
-    // quadratic_tests (); // Function that runs tests.
+    int test_result = quadratic_tests (); // Function that runs tests.
+
+    switch (test_result) {
+        case 0:
+            printf("All right, All right, All right!!!\nAll tests passed\n");
+            break;
+        default:
+            printf("Sadly, tests failed(");
+            break;
+
+    }
     
     printf("Hi! I'll help you with your equation.\n");
     printf("The equation should look like this: \"a * x^2 + b * x + c = 0\"\n");
