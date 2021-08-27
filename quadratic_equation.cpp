@@ -1,6 +1,4 @@
-// вынести тесты в отдельный файл (.h файл <- header <- объявления функций, .cpp <- файл с кодом)
-
-#include <cstdio>
+#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <stdbool.h>
@@ -16,9 +14,16 @@ enum RootsNumber : int {
     INFINITE_NUMBER_OF_ROOTS
 };
 
+enum TestStatus : int {
+    TESTS_PASSED,
+    TESTS_TURNED_OFF,
+};
+
 
 int quadratic_equation_solution(double a, double b, double c, double* root1, double* root2);
 int linear_equation_solution(double b, double c, double* root1);
+void welcome_words();
+void bad_input_message();
 
 
 bool are_equal (double x, double y) {
@@ -37,15 +42,15 @@ int main() {
     double root1 = 0.0;
     double root2 = 0.0;
     int roots_number = NO_ROOTS;
-    int test_result = 1;
+    int test_status = TESTS_TURNED_OFF;
 
-    test_result = quadratic_tests (); // Function that runs tests.
+    test_status = quadratic_tests (); // Function that runs tests.
 
-    switch (test_result) {
-        case 0:
+    switch (test_status) {
+        case TESTS_PASSED:
             printf("All right, All right, All right!!!\nAll tests passed\n");
             break;
-        case 1:
+        case TESTS_TURNED_OFF:
             printf("Tests turned off.");
             break;
         default:
@@ -53,35 +58,24 @@ int main() {
             break;
 
     }
-    
-    printf("Hi! I'll help you with your equation.\n");
-    printf("The equation should look like this: \"a * x^2 + b * x + c = 0\"\n");
-    printf("Enter the coefficients of the quadratic eqution\n");
+
+    welcome_words();
+
     printf("Input a:\n");
     fflush(stdout);
     while (scanf("%lf", &a) == 0) {
-        printf("Incorrect input.\n");
-        printf("Try again:\n");
-        fflush(stdin);
-        fflush(stdout);
+        bad_input_message();
     }
     printf("Input b:\n"); 
     fflush(stdout);
     while (scanf("%lf", &b) == 0) {
-        printf("Incorrect input.\n");
-        printf("Try again:\n");
-        fflush(stdin);
-        fflush(stdout);
+        bad_input_message();
     }
     printf("Input c:\n");
     fflush(stdout); 
     while (scanf("%lf", &c) == 0) {
-        printf("Incorrect input.\n");
-        printf("Try again:\n");
-        fflush(stdin);
-        fflush(stdout);
+        bad_input_message();
     }
-    
 
     roots_number = quadratic_equation_solution(a, b, c, &root1, &root2);
 
@@ -117,6 +111,7 @@ int quadratic_equation_solution(double a, double b, double c, double* root1, dou
     assert(isfinite(c));
     assert(root1 != NULL);
     assert(root2 != NULL);
+
     double discriminant = 0.0;
     double square_of_discriminant = 0.0;
     int number_of_roots = 0;
@@ -126,23 +121,24 @@ int quadratic_equation_solution(double a, double b, double c, double* root1, dou
     if (is_linear) {
         number_of_roots = linear_equation_solution(b, c, root1);
         return number_of_roots;
-    }
-    else {
-    discriminant = b * b - 4 * a * c;
-    are_real_roots = more(discriminant, 0.0);
-    if (!are_real_roots) {
-        return NO_ROOTS;
-    }
-    square_of_discriminant = sqrt(discriminant);
-    if (are_equal(discriminant, 0.0)) {
-        *root1 = (-b + sqrt(discriminant)) / (2 * a);
-        return ONE_ROOT;
-    }
-    *root1 = (-b + square_of_discriminant) / (2 * a);
-    *root2 = (-b - square_of_discriminant) / (2 * a);
-    return TWO_ROOTS;
-    }
-    
+    } else {
+        discriminant = b * b - 4 * a * c;
+        are_real_roots = more(discriminant, 0.0);
+        if (!are_real_roots) {
+            return NO_ROOTS;
+        }
+
+        square_of_discriminant = sqrt(discriminant);
+
+        if (are_equal(discriminant, 0.0)) {
+            *root1 = (-b + sqrt(discriminant)) / (2 * a);
+            return ONE_ROOT;
+        }
+
+        *root1 = (-b + square_of_discriminant) / (2 * a);
+        *root2 = (-b - square_of_discriminant) / (2 * a);
+        return TWO_ROOTS;
+    }  
 }
 
 
@@ -156,13 +152,29 @@ int linear_equation_solution(double b, double c, double* root1) {
     if (are_equal(b, 0.0) and are_equal(c, 0.0)) {
         return INFINITE_NUMBER_OF_ROOTS;
     }
+
     if (are_equal(b, 0.0) and !are_equal(c, 0.0)) {
         return NO_ROOTS;
     }
+
     if (!are_equal(b, 0.0) and are_equal(c, 0.0)) {
         *root1 = 0;
         return ONE_ROOT;
     }
+
     *root1 = -c / b;
     return ONE_ROOT;
+}
+
+void welcome_words() {
+    printf("Hi! I'll help you with your equation.\n");
+    printf("The equation should look like this: \"a * x^2 + b * x + c = 0\"\n");
+    printf("Enter the coefficients of the quadratic eqution\n");
+}
+
+void bad_input_message() {
+    printf("Incorrect input.\n");
+    printf("Try again:\n");
+    fflush(stdin);
+    fflush(stdout);
 }
