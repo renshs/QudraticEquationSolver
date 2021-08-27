@@ -37,8 +37,9 @@ int main() {
     double root1 = 0.0;
     double root2 = 0.0;
     int roots_number = NO_ROOTS;
+    int test_result = 0;
 
-    int test_result = quadratic_tests (); // Function that runs tests.
+    //test_result = quadratic_tests (); // Function that runs tests.
 
     switch (test_result) {
         case 0:
@@ -56,19 +57,22 @@ int main() {
     printf("Input a:\n");
     fflush(stdout);
     while (scanf("%lf", &a) == 0) {
-        printf("Incorrect input.\nTry again:\n");
+        printf("Incorrect input.\n");
+        printf("Try again:\n");
         fflush(stdin);
     }
     printf("Input b:\n"); 
     fflush(stdout);
     while (scanf("%lf", &b) == 0) {
-        printf("Incorrect input.\nTry again:\n");
+        printf("Incorrect input.\n");
+        printf("Try again:\n");
         fflush(stdin);
     }
     printf("Input c:\n");
     fflush(stdout); 
     while (scanf("%lf", &c) == 0) {
-        printf("Incorrect input.\nTry again:\n");
+        printf("Incorrect input.\n");
+        printf("Try again:\n");
         fflush(stdin);
     }
     
@@ -120,7 +124,7 @@ int quadratic_equation_solution(double a, double b, double c, double* root1, dou
     else {
     discriminant = b * b - 4 * a * c;
     are_real_roots = more(discriminant, 0.0);
-    if (!are_real_roots) {
+    if (are_real_roots) {
         return NO_ROOTS;
     }
     square_of_discriminant = sqrt(discriminant);
