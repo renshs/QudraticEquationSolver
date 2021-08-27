@@ -44,19 +44,18 @@ int main() {
     int roots_number = NO_ROOTS;
     int test_status = TESTS_TURNED_OFF;
 
-    test_status = quadratic_tests (); // Function that runs tests.
+    //test_status = quadratic_tests (); // Function that runs tests.
 
     switch (test_status) {
         case TESTS_PASSED:
             printf("All right, All right, All right!!!\nAll tests passed\n");
             break;
         case TESTS_TURNED_OFF:
-            printf("Tests turned off.");
+            printf("Tests turned off.\n");
             break;
         default:
-            printf("Sadly, tests failed(");
+            printf("Sadly, tests failed(\n");
             break;
-
     }
 
     welcome_words();
@@ -97,7 +96,6 @@ int main() {
             printf("ERROR: roots_number returns %d", roots_number);
             break;
     }
-
     return 0;
 }
 
@@ -117,6 +115,20 @@ int quadratic_equation_solution(double a, double b, double c, double* root1, dou
     int number_of_roots = 0;
     bool are_real_roots = false;
     bool is_linear = are_equal(a, 0.0);
+
+    if (are_equal(c, 0.0)) {
+        *root2 = 0;
+        number_of_roots = linear_equation_solution(a, b, root1);
+        if (number_of_roots == INFINITE_NUMBER_OF_ROOTS) {
+            return INFINITE_NUMBER_OF_ROOTS;
+        }
+        if (are_equal(*root1, 0.0)) {
+            return ONE_ROOT;
+        }
+        if (number_of_roots == ONE_ROOT) {
+            return TWO_ROOTS;
+        }
+    }
 
     if (is_linear) {
         number_of_roots = linear_equation_solution(b, c, root1);
@@ -149,15 +161,15 @@ int linear_equation_solution(double b, double c, double* root1) {
     assert(isfinite(b));
     assert(isfinite(c));
 
-    if (are_equal(b, 0.0) and are_equal(c, 0.0)) {
+    if (are_equal(b, 0.0) && are_equal(c, 0.0)) {
         return INFINITE_NUMBER_OF_ROOTS;
     }
 
-    if (are_equal(b, 0.0) and !are_equal(c, 0.0)) {
+    if (are_equal(b, 0.0) && !are_equal(c, 0.0)) {
         return NO_ROOTS;
     }
 
-    if (!are_equal(b, 0.0) and are_equal(c, 0.0)) {
+    if (!are_equal(b, 0.0) && are_equal(c, 0.0)) {
         *root1 = 0;
         return ONE_ROOT;
     }

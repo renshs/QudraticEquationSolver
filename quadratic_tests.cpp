@@ -16,6 +16,8 @@ int quadratic_tests() {
     if (solution_test(4, 1, -7,  12, 4,  3,  2) == 0) fails++;
     if (solution_test(7, 1,  2,  1,  -1, 0,  1) == 0) fails++;
     if (solution_test(8, 0,  0,  5,  0,  0,  0) == 0) fails++;
+    if (solution_test(9, 0,  3,  0,  0,  0,  1) == 0) fails++;
+    if (solution_test(10,0,  0,  0,  0,  0,  3) == 0) fails++;
     return fails;
 }
 
