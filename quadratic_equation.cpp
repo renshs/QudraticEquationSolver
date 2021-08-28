@@ -5,7 +5,7 @@
 #include <assert.h>
 #include "quadratic_tests.h"
 
-const double PRECISION = 1e-7;
+const double PRECISION = 1e-5;
 
 enum RootsNumber : int {
     NO_ROOTS,
@@ -14,9 +14,14 @@ enum RootsNumber : int {
     INFINITE_NUMBER_OF_ROOTS
 };
 
-enum TestStatus : int {
+enum Unit_TestStatus : int {
     TESTS_PASSED,
     TESTS_TURNED_OFF,
+};
+
+enum Unit_Tests_Launch : int {
+    NO,
+    YES,
 };
 
 
@@ -24,6 +29,10 @@ int quadratic_equation_solution(double a, double b, double c, double* root1, dou
 int linear_equation_solution(double b, double c, double* root1);
 void welcome_words();
 void bad_input_message();
+void result_message(int roots_n, double root1, double root2);
+void run_unit_tests(bool status);
+void input_data(double* a, double* b, double* c);
+void get_coefficient(double* coefficient);
 
 
 bool are_equal (double x, double y) {
@@ -44,58 +53,16 @@ int main() {
     int roots_number = NO_ROOTS;
     int test_status = TESTS_TURNED_OFF;
 
-    //test_status = quadratic_tests (); // Function that runs tests.
-
-    switch (test_status) {
-        case TESTS_PASSED:
-            printf("All right, All right, All right!!!\nAll tests passed\n");
-            break;
-        case TESTS_TURNED_OFF:
-            printf("Tests turned off.\n");
-            break;
-        default:
-            printf("Sadly, tests failed(\n");
-            break;
-    }
+    run_unit_tests(YES);
 
     welcome_words();
-
-    printf("Input a:\n");
-    fflush(stdout);
-    while (scanf("%lf", &a) == 0) {
-        bad_input_message();
-    }
-    printf("Input b:\n"); 
-    fflush(stdout);
-    while (scanf("%lf", &b) == 0) {
-        bad_input_message();
-    }
-    printf("Input c:\n");
-    fflush(stdout); 
-    while (scanf("%lf", &c) == 0) {
-        bad_input_message();
-    }
+    
+    input_data(&a, &b, &c);
 
     roots_number = quadratic_equation_solution(a, b, c, &root1, &root2);
 
-    switch (roots_number) {
-        case NO_ROOTS:
-            printf("No roots");
-            break;
-        case ONE_ROOT:
-            printf("Root is %.3lf\n", root1);
-            break;
-        case TWO_ROOTS:
-            printf("First root is %.3lf\n", root1);
-            printf("Second root is %.3lf\n", root2);
-            break;
-        case INFINITE_NUMBER_OF_ROOTS:
-            printf("Infinite solutions\n");
-            break;
-        default:
-            printf("ERROR: roots_number returns %d", roots_number);
-            break;
-    }
+    result_message(roots_number, root1, root2);
+
     return 0;
 }
 
@@ -178,15 +145,87 @@ int linear_equation_solution(double b, double c, double* root1) {
     return ONE_ROOT;
 }
 
+
 void welcome_words() {
     printf("Hi! I'll help you with your equation.\n");
     printf("The equation should look like this: \"a * x^2 + b * x + c = 0\"\n");
     printf("Enter the coefficients of the quadratic eqution\n");
 }
 
+
 void bad_input_message() {
     printf("Incorrect input.\n");
     printf("Try again:\n");
-    fflush(stdin);
-    fflush(stdout);
+}
+
+
+void result_message(int roots_n, double root1, double root2) {
+    switch (roots_n) {
+        case NO_ROOTS:
+            printf("No roots");
+            break;
+        case ONE_ROOT:
+            printf("Root is %.3lf\n", root1);
+            break;
+        case TWO_ROOTS:
+            printf("First root is %.3lf\n", root1);
+            printf("Second root is %.3lf\n", root2);
+            break;
+        case INFINITE_NUMBER_OF_ROOTS:
+            printf("Infinite solutions\n");
+            break;
+        default:
+            printf("ERROR: roots_number returns %d", roots_n);
+            break;
+    }
+}
+
+
+void run_unit_tests(bool status) {
+    if (status) {
+        switch (quadratic_tests()) {
+            case TESTS_PASSED:
+                printf("All right, All right, All right!!!\nAll tests passed\n\n");
+                break;
+            case TESTS_TURNED_OFF:
+                printf("Tests turned off.\n\n");
+                break;
+            default:
+                printf("Sadly, tests failed(\n\n");
+                break;
+        }
+    }
+}
+
+
+void input_data(double* a, double* b, double* c) {
+    printf("Input a:\n");
+    get_coefficient(a);
+
+    printf("Input b:\n"); 
+    get_coefficient(b);
+
+    printf("Input c:\n");
+    get_coefficient(c);
+}
+
+
+void get_coefficient(double* coefficient) {
+    bool reading_coeff = YES;
+    while (reading_coeff) {
+        if (scanf("%lf", coefficient) != 1) {
+            bad_input_message();
+            while (getchar() != '\n') {;}
+        } else {
+            int count_of_symbols = 0;
+            while (getchar() != '\n') {
+                count_of_symbols++;
+            }
+            if (count_of_symbols == 0) {
+                reading_coeff = NO;
+            } else {
+                bad_input_message();
+            }
+        }
+    } 
 }
