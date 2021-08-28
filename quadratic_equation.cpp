@@ -76,8 +76,9 @@ int main() {
 }
 /*!
     \brief This function solve quadratic equation.\n
-    If you have coefficients of quadratic equation send them as arguments of this function.\n
-    Also you need to send pointers to variables that store the roots.
+    If you have coefficients of quadratic equation send them as arguments of this function. \n
+    Also you need to send pointers to variables that store the roots. \n
+    This function takes coefficients a, b, c and pointers to variables that contains roots.
 */
 
 int quadratic_equation_solution(double a, double b, double c, double* root1, double* root2) { 
@@ -137,7 +138,8 @@ int quadratic_equation_solution(double a, double b, double c, double* root1, dou
     \brief This function solve linear equation.\n
     This function works as quadratic_equation_solution(double a, double b, double c, double* root1, double* root2)\n
     If you have coefficients of linear equation send them as arguments of this function.\n
-    Also you need to send pointers to variables that store the roots.
+    This function takes coefficients a, b and pointer to variable that contains root.
+
 */
 
 int linear_equation_solution(double b, double c, double* root1) {
@@ -185,6 +187,8 @@ void bad_input_message() {
 
 /*!
     \brief This function prints the result of solving the equation.
+    It takes roots number and roots.
+
 */
 
 void result_message(int roots_n, double root1, double root2) {
@@ -233,7 +237,7 @@ void run_unit_tests(bool status) {
 
 /*!
     \brief This function prints an interface for data entry.\n
-    It takes points to variabels and puts values to variables.
+    It takes pointers to variabels and puts values to variables.
 */
 
 void input_data(double* a, double* b, double* c) {
@@ -248,8 +252,8 @@ void input_data(double* a, double* b, double* c) {
 }
 
 /*!
-    \brief This function gets coefficient.\n
-    It takes point to variable that stores the coefficient.
+    \brief This function gets the coefficient from the input.\n
+    It takes a pointer to variable that stores the coefficient.
 */
 
 void get_coefficient(double* coefficient) {
