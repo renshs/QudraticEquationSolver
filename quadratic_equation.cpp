@@ -4,9 +4,10 @@
 #include <stdbool.h>
 #include <assert.h>
 #include "quadratic_tests.h"
+#include "quadratic_equation.h"
 
 const double PRECISION = 1e-5;
-
+/*
 enum RootsNumber : int {
     NO_ROOTS,
     ONE_ROOT,
@@ -23,7 +24,7 @@ enum Unit_Tests_Launch : int {
     NO,
     YES,
 };
-
+*/
 
 int quadratic_equation_solution(double a, double b, double c, double* root1, double* root2);
 int linear_equation_solution(double b, double c, double* root1);
@@ -53,27 +54,7 @@ bool more (double x, double y) {
 }
 
 
-int main() {
-    double a = 0.0;
-    double b = 0.0;
-    double c = 0.0;
-    double root1 = 0.0;
-    double root2 = 0.0;
-    int roots_number = NO_ROOTS;
-    int test_status = TESTS_TURNED_OFF;
 
-    run_unit_tests(YES);
-
-    welcome_words();
-    
-    input_data(&a, &b, &c);
-
-    roots_number = quadratic_equation_solution(a, b, c, &root1, &root2);
-
-    result_message(roots_number, root1, root2);
-
-    return 0;
-}
 /*!
     \brief This function solve quadratic equation.\n
     If you have coefficients of quadratic equation send them as arguments of this function. \n
