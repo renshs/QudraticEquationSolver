@@ -4,11 +4,16 @@
 #include "quadratic_equation.h"
 #include "quadratic_tests.h"
 
+/*!
+    \brief This function runs tests of quadratic_equation_solution(double a, double b, double c, double* root1, double* root2) \n
+    If all tests pass it returns 0. \n
+    Otherwise it returns number of failed tests.
+*/
 
 int quadratic_tests() {
+
     int fails = 0;
-    double root1 = 0.0;
-    double root2 = 0.0;
+
     //                №  a   b   c
     if (solution_test(1, 1, -5,  4) == 0) fails++;
     if (solution_test(2, 1, -3,  2) == 0) fails++;
@@ -18,8 +23,15 @@ int quadratic_tests() {
     if (solution_test(8, 0,  0,  5) == 0) fails++;
     if (solution_test(9, 0,  3,  0) == 0) fails++;
     if (solution_test(10,0,  0,  0) == 0) fails++;
+
     return fails;
 }
+
+/*!
+    \brief This function checks the solution of a specific equatioin.\n
+    It takes the test number and coefficients.\n
+    If solution is wrong, it prints test number and solution that our function recieved.
+*/
 
 int solution_test(int test_n, double a, double b, double c) {
     assert(isnan(a) == 0);

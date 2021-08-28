@@ -34,10 +34,19 @@ void run_unit_tests(bool status);
 void input_data(double* a, double* b, double* c);
 void get_coefficient(double* coefficient);
 
+/*!
+    \brief This function returns the result of comparing two doubles.
+    It takes two doubles.
+*/
 
 bool are_equal (double x, double y) {
     return abs(x - y) < PRECISION;
 }
+
+/*!
+    \brief This function returns whether first argument is greater than second.\n
+    It takes two doubles.
+*/
 
 bool more (double x, double y) {
     return (x >= y) || (are_equal(x, y));
@@ -65,9 +74,13 @@ int main() {
 
     return 0;
 }
+/*!
+    \brief This function solve quadratic equation.\n
+    If you have coefficients of quadratic equation send them as arguments of this function.\n
+    Also you need to send pointers to variables that store the roots.
+*/
 
-
-int quadratic_equation_solution(double a, double b, double c, double* root1, double* root2 ) { 
+int quadratic_equation_solution(double a, double b, double c, double* root1, double* root2) { 
     assert(isnan(a) == 0);
     assert(isnan(b) == 0);
     assert(isnan(c) == 0);
@@ -120,11 +133,17 @@ int quadratic_equation_solution(double a, double b, double c, double* root1, dou
     }  
 }
 
+/*!
+    \brief This function solve linear equation.\n
+    This function works as quadratic_equation_solution(double a, double b, double c, double* root1, double* root2)\n
+    If you have coefficients of linear equation send them as arguments of this function.\n
+    Also you need to send pointers to variables that store the roots.
+*/
 
 int linear_equation_solution(double b, double c, double* root1) {
     assert(isnan(b) == 0);
     assert(isnan(c) == 0);
-    assert(root1 != NULL);
+    assert(root1);
     assert(isfinite(b));
     assert(isfinite(c));
 
@@ -145,6 +164,9 @@ int linear_equation_solution(double b, double c, double* root1) {
     return ONE_ROOT;
 }
 
+/*!
+    \brief This function prints greetings.
+*/
 
 void welcome_words() {
     printf("Hi! I'll help you with your equation.\n");
@@ -152,12 +174,18 @@ void welcome_words() {
     printf("Enter the coefficients of the quadratic eqution\n");
 }
 
+/*!
+    \brief This function prints message about error in input data.
+*/
 
 void bad_input_message() {
     printf("Incorrect input.\n");
     printf("Try again:\n");
 }
 
+/*!
+    \brief This function prints the result of solving the equation.
+*/
 
 void result_message(int roots_n, double root1, double root2) {
     switch (roots_n) {
@@ -180,6 +208,12 @@ void result_message(int roots_n, double root1, double root2) {
     }
 }
 
+/*! 
+    \brief This function runs unit tests.\n
+    It takes an argument which takes yes or no values.\n
+    If "YES" is given it calls quadratic_tests() and handels the result.\n
+    If "NO" is given it warns that tests are disabled.
+*/
 
 void run_unit_tests(bool status) {
     if (status) {
@@ -197,6 +231,10 @@ void run_unit_tests(bool status) {
     }
 }
 
+/*!
+    \brief This function prints an interface for data entry.\n
+    It takes points to variabels and puts values to variables.
+*/
 
 void input_data(double* a, double* b, double* c) {
     printf("Input a:\n");
@@ -209,6 +247,10 @@ void input_data(double* a, double* b, double* c) {
     get_coefficient(c);
 }
 
+/*!
+    \brief This function gets coefficient.\n
+    It takes point to variable that stores the coefficient.
+*/
 
 void get_coefficient(double* coefficient) {
     bool reading_coeff = YES;
