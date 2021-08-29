@@ -19,19 +19,17 @@ bool are_equal (double x, double y) {
 }
 
 /*!
-    \brief This function returns whether first argument is greater than second.\n
+    \brief This function returns whether first argument is greater or equal than second.\n
     It takes two doubles.
 */
 
 bool greater_or_equal (double x, double y) {
-    return (x > y) || abs(x - y) < PRECISION;
+    return (x > (y - PRECISION));
 }
 
 /*!
     \brief This function solve quadratic equation.\n
-    If you have coefficients of quadratic equation send them as arguments of this function. \n
-    Also you need to send pointers to variables that store the roots. \n
-    This function takes coefficients a, b, c and pointers to variables that contains roots.
+    This function takes coefficients a, b, c and two pointers to variables that contains roots.
 */
 
 int quadratic_equation_solution(double a, double b, double c, double* root1, double* root2) { 
@@ -92,7 +90,6 @@ int quadratic_equation_solution(double a, double b, double c, double* root1, dou
     This function works as quadratic_equation_solution(double a, double b, double c, double* root1, double* root2)\n
     If you have coefficients of linear equation send them as arguments of this function.\n
     This function takes coefficients a, b and pointer to variable that contains root.
-
 */
 
 int linear_equation_solution(double b, double c, double* root1) {
@@ -141,7 +138,6 @@ void bad_input_message() {
 /*!
     \brief This function prints the result of solving the equation.
     It takes roots number and roots.
-
 */
 
 void result_message(int roots_n, double root1, double root2) {
@@ -167,7 +163,7 @@ void result_message(int roots_n, double root1, double root2) {
 
 /*! 
     \brief This function runs unit tests.\n
-    It takes an argument which takes yes or no values.\n
+    It takes an argument which takes YES or NO values.\n
     If "YES" is given it calls quadratic_tests() and handels the result.\n
     If "NO" is given it warns that tests are disabled.
 */
@@ -216,11 +212,11 @@ void get_coefficient(double* coefficient) {
             bad_input_message();
             while (getchar() != '\n') {;}
         } else {
-            int count_of_symbols = 0;
+            int number_of_symbols = 0;
             while (getchar() != '\n') {
-                count_of_symbols++;
+                number_of_symbols++;
             }
-            if (count_of_symbols == 0) {
+            if (number_of_symbols == 0) {
                 reading_coeff = NO;
             } else {
                 bad_input_message();
