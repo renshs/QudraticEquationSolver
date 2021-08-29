@@ -6,34 +6,8 @@
 #include "quadratic_tests.h"
 #include "quadratic_equation.h"
 
-const double PRECISION = 1e-5;
-/*
-enum RootsNumber : int {
-    NO_ROOTS,
-    ONE_ROOT,
-    TWO_ROOTS,
-    INFINITE_NUMBER_OF_ROOTS
-};
+const double PRECISION = 1e-6;
 
-enum Unit_TestStatus : int {
-    TESTS_PASSED,
-    TESTS_TURNED_OFF,
-};
-
-enum Unit_Tests_Launch : int {
-    NO,
-    YES,
-};
-*/
-
-int quadratic_equation_solution(double a, double b, double c, double* root1, double* root2);
-int linear_equation_solution(double b, double c, double* root1);
-void welcome_words();
-void bad_input_message();
-void result_message(int roots_n, double root1, double root2);
-void run_unit_tests(bool status);
-void input_data(double* a, double* b, double* c);
-void get_coefficient(double* coefficient);
 
 /*!
     \brief This function returns the result of comparing two doubles.
@@ -49,11 +23,9 @@ bool are_equal (double x, double y) {
     It takes two doubles.
 */
 
-bool more (double x, double y) {
-    return (x >= y) || (are_equal(x, y));
+bool greater_or_equal (double x, double y) {
+    return (x > y) || abs(x - y) < PRECISION;
 }
-
-
 
 /*!
     \brief This function solve quadratic equation.\n
@@ -69,8 +41,8 @@ int quadratic_equation_solution(double a, double b, double c, double* root1, dou
     assert(isfinite(a));
     assert(isfinite(b));
     assert(isfinite(c));
-    assert(root1 != NULL);
-    assert(root2 != NULL);
+    assert(root1);
+    assert(root2);
 
     double discriminant = 0.0;
     double square_of_discriminant = 0.0;
@@ -97,7 +69,7 @@ int quadratic_equation_solution(double a, double b, double c, double* root1, dou
         return number_of_roots;
     } else {
         discriminant = b * b - 4 * a * c;
-        are_real_roots = more(discriminant, 0.0);
+        are_real_roots = greater_or_equal(discriminant, 0.0);
         if (!are_real_roots) {
             return NO_ROOTS;
         }
